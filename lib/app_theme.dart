@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Material 3 官方基线种子色（默认紫色）。
 const Color kMaterial3Seed = Color(0xFF6750A4);

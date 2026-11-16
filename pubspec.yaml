@@ -39,6 +39,7 @@ dependencies:
   path: ^1.9.1
   desktop_drop: ^0.8.0
   heic_native: ^1.1.0
+  material_ui: ^1.11.0
 
 dev_dependencies:
   flutter_test:
