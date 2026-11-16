@@ -51,7 +51,7 @@ Future<Uint8List?> _createHeicThumbnail(String path) async {
       path,
       compressionLevel: 1,
     );
-    return compute(_resizeThumbnail, pngBytes);
+    return await compute(_resizeThumbnail, pngBytes);
   } catch (_) {
     return null;
   }
