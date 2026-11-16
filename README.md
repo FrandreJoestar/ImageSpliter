@@ -58,6 +58,24 @@ flutter build windows --release
 
 产物位于 `build\windows\x64\runner\Release\`。
 
+### 打包 MSI 安装程序
+
+需要先安装 WiX Toolset v5：
+
+```bash
+dotnet tool install --global wix
+```
+
+然后执行一键打包脚本：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File installer\build_msi.ps1
+```
+
+脚本会构建发布版、自动补齐 VC++ 运行库（`msvcp140.dll` 等），并生成 `build\windows\installer\ImageSpliter-<版本>-x64.msi`。安装包自带运行库，目标机器无需另行安装 Visual C++ 运行库。
+
+安装包脚本默认从 `pubspec.yaml` 读取版本号，也可以手动指定：`-Version 1.0.1`。
+
 ## 使用流程
 
 1. 点击「导入图片」或「导入文件夹」，也可以直接把文件拖进窗口

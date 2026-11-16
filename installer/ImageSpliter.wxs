@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+
+  <Package
+      Name="ImageSpliter"
+      Manufacturer="FrandreJoestar"
+      Version="$(var.ProductVersion)"
+      UpgradeCode="ED7A46A2-FDB0-42BD-AF96-FECBFDD53D75"
+      Scope="perMachine"
+      Compressed="yes"
+      InstallerVersion="500">
+
+    <SummaryInformation Description="ImageSpliter 图片分割与多格式导出工具" Manufacturer="FrandreJoestar" />
+
+    <MajorUpgrade DowngradeErrorMessage="已安装更高版本的 ImageSpliter，请先卸载后再安装。" />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="AppIcon" SourceFile="windows\runner\resources\app_icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="AppIcon" />
+    <Property Id="ARPNOMODIFY" Value="1" />
+
+    <Feature Id="Complete" Title="ImageSpliter" Level="1">
+      <ComponentGroupRef Id="ProductFiles" />
+      <ComponentRef Id="StartMenuShortcut" />
+      <ComponentRef Id="DesktopShortcut" />
+    </Feature>
+  </Package>
+
+  <Fragment>
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="ImageSpliter" />
+    </StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="ImageSpliter" />
+    </StandardDirectory>
+  </Fragment>
+
+  <!-- 递归收集 flutter build 的 Release 输出，保留目录结构 -->
+  <Fragment>
+    <ComponentGroup Id="ProductFiles" Directory="INSTALLFOLDER">
+      <Files Include="$(var.ReleaseDir)\**" />
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <Component Id="StartMenuShortcut" Directory="ApplicationProgramsFolder" Guid="8CDEB4BE-2811-495E-92A2-2ECBC13714C9">
+      <Shortcut
+          Id="StartMenuShortcut"
+          Name="ImageSpliter"
+          Description="本地图片分割与多格式导出工具"
+          Target="[INSTALLFOLDER]imagespliter.exe"
+          WorkingDirectory="INSTALLFOLDER"
+          Icon="AppIcon" />
+      <RemoveFolder Id="RemoveApplicationProgramsFolder" On="uninstall" />
+      <RegistryValue Root="HKMU" Key="Software\FrandreJoestar\ImageSpliter" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
+
+    <Component Id="DesktopShortcut" Directory="DesktopFolder" Guid="5634476F-45DF-457F-BE55-10A2E530233A">
+      <Shortcut
+          Id="DesktopShortcut"
+          Name="ImageSpliter"
+          Description="本地图片分割与多格式导出工具"
+          Target="[INSTALLFOLDER]imagespliter.exe"
+          WorkingDirectory="INSTALLFOLDER"
+          Icon="AppIcon" />
+      <RegistryValue Root="HKMU" Key="Software\FrandreJoestar\ImageSpliter" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
+  </Fragment>
+
+</Wix>
